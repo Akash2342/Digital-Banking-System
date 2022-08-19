@@ -1,7 +1,9 @@
 #include<iostream>
 using namespace std;
 #include<iomanip>
+#include<fstream>
 class bank{
+    public:
 	char name[20];
 	int acno;
 	char actype[20];
@@ -78,6 +80,29 @@ class bank{
 		    cout<<"too many number of attempt"<<endl;
 		    break;}
 		}while(a--);
+		//writing into the file
+		ofstream fout;
+		fout.open("ramesh.txt");
+		string full_name;
+		cout<<"Enter your full name "<<endl;
+	cin>>full_name;
+		fout<<full_name<<endl;
+		fout<<o1.acno<<endl;
+		fout<<o1.bal<<endl;
+		fout.close();
+		//reading from the file
+		ifstream fin;
+		fin.open("ramesh.txt");
+		string x;
+		getline(fin,x);
+		cout<<"account details of "<<x<<endl;
+		int accno;
+		fin>>accno;
+		cout<<x<<"'s account no is "<<accno<<endl;
+		int accbal;
+		fin>>accbal;
+		cout<<x<<"'s account balance is "<<accbal<<endl;
+		fin.close();
 		end:
 			return 0;
 	}
