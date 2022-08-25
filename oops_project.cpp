@@ -8,11 +8,15 @@ class bank{
 	int acno;
 	char actype[20];
 	int bal;
+	int password;
 	public:
 		void details(void);
 		void deposit(void);
 		void withdraw(void);
 		void display(void);
+		void create_password(int x){
+		    password=x;
+		}
 };
 	void bank :: details(void)
 	{
@@ -43,11 +47,10 @@ class bank{
 			cout<<"Available balance "<<bal<<endl;
 		}
 		else{
-			cout<<"\n not enough balance";
+			cout<<"\n not enough balance"<<endl;
 		}
 	}
 	void bank :: display(void){
-		cout<<endl<<endl<<endl;
 		cout<<setw(50)<<"Details"<<endl;
 		cout<<setw(50)<<"name "<<name<<endl;
 		cout<<setw(50)<<"A/c. no. "<<acno<<endl;
@@ -82,27 +85,44 @@ class bank{
 		}while(a--);
 		//writing into the file
 		ofstream fout;
-		fout.open("ramesh.txt");
-		string full_name;
-		cout<<"Enter your full name "<<endl;
-	cin>>full_name;
-		fout<<full_name<<endl;
+		fout.open("file1.txt");
+		int pin;
+		cout<<"Enter your password (4 digit pin)"<<endl;
+	    cin>>pin;
+	    o1.create_password(pin);
 		fout<<o1.acno<<endl;
+		fout<<pin<<endl;
 		fout<<o1.bal<<endl;
 		fout.close();
 		//reading from the file
+		cout<<"If you want to check your balance, print 1 else 0"<<endl;
+		int q;
+		cin>>q;
+		if(q==1){
 		ifstream fin;
-		fin.open("ramesh.txt");
-		string x;
-		getline(fin,x);
-		cout<<"account details of "<<x<<endl;
+		fin.open("file1.txt");
 		int accno;
 		fin>>accno;
-		cout<<x<<"'s account no is "<<accno<<endl;
-		int accbal;
-		fin>>accbal;
-		cout<<x<<"'s account balance is "<<accbal<<endl;
-		fin.close();
+		cout<<"Your account no is "<<accno<<endl;
+		int pass;
+		fin>>pass;
+		int account_bal;
+		fin>>account_bal;
+		int i=3;
+	    while(i--){
+	    	cout<<"Enter your 4 digit pincode"<<endl;
+	   	    int code;
+	    	cin>>code;
+	    	if(code==pass){
+	    	    cout<<"Your account balance is "<<account_bal<<endl;
+	    	    break;
+	    	}
+	    	else {
+	    	    cout<<"Invalid Attemt "<<i<<endl;
+	    	}
+	    	if(i==0)cout<<"No more attemt";
+	    }
+		fin.close();}
 		end:
 			return 0;
 	}
